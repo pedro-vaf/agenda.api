@@ -1,5 +1,6 @@
 package agenda.api.entities;
 
+import agenda.api.dto.TelephoneDTO;
 import jakarta.persistence.*;
 
 @Entity(name = "telephone")
@@ -24,6 +25,13 @@ public class Telephone {
 
     public Telephone() {
         super();
+    }
+
+    public Telephone (TelephoneDTO telephoneDTO, Contact contact){
+        this.number = telephoneDTO.number();
+        this.categoryTelephone = telephoneDTO.categoryTelephone();
+        this.principal = telephoneDTO.principal();
+        this.contact = contact;
     }
 
     public Long getId() {

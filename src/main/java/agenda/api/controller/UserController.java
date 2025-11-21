@@ -2,16 +2,16 @@ package agenda.api.controller;
 
 import agenda.api.dto.LoginDTO;
 import agenda.api.dto.TokenDTO;
+import agenda.api.dto.UserDTO;
 import agenda.api.entities.User;
 import agenda.api.service.JWTokenService;
 import agenda.api.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
 
 @RestController
 @RequestMapping("/auth")
@@ -28,10 +28,27 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody LoginDTO LoginData){
-        var dto = new UsernamePasswordAuthenticationToken(LoginData.login(), LoginData.password());
+    public ResponseEntity<TokenDTO> login(@RequestBody @Valid LoginDTO dadosLogin) {
+        var dto = new UsernamePasswordAuthenticationToken(dadosLogin.username(), dadosLogin.password());
         var authentication = manager.authenticate(dto);
         var tokenJWT = tokenService.generateToken((User) authentication.getPrincipal());
-        return ResponseEntity.ok(new TokenDTO())
+        return ResponseEntity.ok(new TokenDTO(tokenJWT));
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<UserDTO> registerUser(@RequestBody @Valid LoginDTO dadosLogin) {
+        var usuario=service.registerUser(dadosLogin);
+        return ResponseEntity.ok(usuario);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<UserDTO> deleteUser(@PathVariable Long id) {
+        var user = service.deleteUser(id);
+        return ResponseEntity.ok(user);
+    }
+
+    @GetMapping("/listAll")
+    public List<UserDTO> listAllUsers() {
+        return service.listAllUsers();
     }
 }

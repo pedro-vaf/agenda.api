@@ -1,6 +1,8 @@
 package agenda.api.entities;
 
+import agenda.api.dto.ContactDTO;
 import jakarta.persistence.*;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -31,6 +33,13 @@ public class Contact {
 
     public Contact() {
         super();
+    }
+
+    public Contact(ContactDTO contactDTO, UserDetails userDetails){
+        this.name = contactDTO.name();
+        this.lastName = contactDTO.lastname();
+        this.email = contactDTO.email();
+        this.user = (User)userDetails;
     }
 
     public Long getId() {

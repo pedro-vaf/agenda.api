@@ -42,7 +42,7 @@ public class User implements UserDetails {
     }
 
     public User(LoginDTO dto) {
-        this.username = dto.login();
+        this.username = dto.username();
         this.password = dto.password();
     }
 
