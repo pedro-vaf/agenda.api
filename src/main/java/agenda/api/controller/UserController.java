@@ -17,9 +17,9 @@ import java.util.List;
 @RequestMapping("/auth")
 public class UserController {
 
-    private AuthenticationManager manager;
-    private UserService service;
-    private JWTokenService tokenService;
+    private final AuthenticationManager manager;
+    private final UserService service;
+    private final JWTokenService tokenService;
 
     public UserController(AuthenticationManager manager, UserService service, JWTokenService tokenService) {
         this.manager = manager;

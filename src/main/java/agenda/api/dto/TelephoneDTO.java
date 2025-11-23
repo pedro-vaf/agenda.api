@@ -19,5 +19,5 @@ public record TelephoneDTO(
         /* Indica se é o número principal do contato */
         boolean principal
 ) {
-    public TelephoneDTO(Telephone telephone){this(telephone.getId(), telephone.getNumber(), telephone.getCategoryTelephone(), telephone.getPrincipal());}
+    public TelephoneDTO(Telephone telephone){ this(telephone.getId(), telephone.getNumber(), telephone.getCategoryTelephone(), telephone.getPrincipal()); }
 }

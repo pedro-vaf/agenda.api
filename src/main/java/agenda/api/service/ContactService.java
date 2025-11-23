@@ -13,8 +13,8 @@ import java.util.List;
 @Service
 public class ContactService {
 
-    private ContactRepository contactRepository;
-    private UserRepository userRepository;
+    private final ContactRepository contactRepository;
+    private final UserRepository userRepository;
 
     public ContactService(UserRepository userRepository, ContactRepository contactRepository) {
         this.userRepository = userRepository;
@@ -39,11 +39,6 @@ public class ContactService {
         return contacts.stream().map(ContactDTO::new).toList();
     }
 
-    public ContactDTO listContactId(Long id){
-        var contact = contactRepository.getReferenceById(id);
-        return new ContactDTO(contact);
-    }
-
     public ContactDTO updateContactId(Long id, ContactDTO contactDTO, String username){
         var user = (User)userRepository.findByUsername(username);
         var contact = contactRepository.getReferenceById(id);
@@ -60,6 +55,11 @@ public class ContactService {
     public ContactDTO deleteContactId(Long id){
         var contact = contactRepository.getReferenceById(id);
         contactRepository.delete(contact);
+        return new ContactDTO(contact);
+    }
+
+    public ContactDTO getContactId(Long id){
+        var contact = contactRepository.getReferenceById(id);
         return new ContactDTO(contact);
     }
 }

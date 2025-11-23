@@ -12,8 +12,8 @@ import java.util.List;
 @Service
 public class UserService {
 
-    private UserRepository userRepository;
-    private PasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
