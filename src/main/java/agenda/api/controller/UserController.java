@@ -28,17 +28,17 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<TokenDTO> login(@RequestBody @Valid LoginDTO dadosLogin) {
-        var dto = new UsernamePasswordAuthenticationToken(dadosLogin.username(), dadosLogin.password());
+    public ResponseEntity<TokenDTO> login(@RequestBody @Valid LoginDTO loginData) {
+        var dto = new UsernamePasswordAuthenticationToken(loginData.username(), loginData.password());
         var authentication = manager.authenticate(dto);
         var tokenJWT = tokenService.generateToken((User) authentication.getPrincipal());
         return ResponseEntity.ok(new TokenDTO(tokenJWT));
     }
 
     @PostMapping("/register")
-    public ResponseEntity<UserDTO> registerUser(@RequestBody @Valid LoginDTO dadosLogin) {
-        var usuario=service.registerUser(dadosLogin);
-        return ResponseEntity.ok(usuario);
+    public ResponseEntity<UserDTO> registerUser(@RequestBody @Valid LoginDTO loginData) {
+        var user = service.registerUser(loginData);
+        return ResponseEntity.ok(user);
     }
 
     @DeleteMapping("/delete/{id}")

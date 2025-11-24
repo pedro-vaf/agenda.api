@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity(name = "contact")
@@ -19,7 +20,7 @@ public class Contact {
     private String password;
     private String email;
     @Column(name = "date_of_creation", nullable = false)
-    private LocalDateTime dateOfCreation;
+    private LocalDateTime dateOfCreation = LocalDateTime.now();
 
     /* Relacionamento: Muitos Contatos pertencem a um único Usuario */
     @ManyToOne(fetch = FetchType.LAZY)
@@ -29,7 +30,7 @@ public class Contact {
     /* Relacionamento: Um Contato pode ter muitos Telefones */
     /* orphanRemoval = true garante que se um Telefone for desassociado do Contato, ele será deletado */
     @OneToMany(mappedBy = "contact", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Telephone> telephone;
+    private List<Telephone> telephone = new ArrayList<Telephone>();
 
     public Contact() {
         super();
